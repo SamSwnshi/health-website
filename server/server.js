@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import connectionDb from "./db/config.js";
 import fileUpload from "express-fileupload";
 import userRoutes from "./routes/user.routes.js";
-import {errorMiddleware} from "./middleware/errorMiddleware"
+import {errorMiddleware} from "./middleware/errorMiddleware.js"
 const app = express();
 dotenv.config();
 
