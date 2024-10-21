@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.models.js";
 
-export const patientToken = async(req,res)=>{
-    const token = req.cookie.patientToken;
+export const patientAuthToken = async(req,res,next)=>{
+    const token = req.cookies.patientToken;
 
     if(!token){
         return res.status(400).json({message: "User is not authenticated!"});
@@ -14,9 +14,10 @@ export const patientToken = async(req,res)=>{
     if(req.user.roles !== "Patient"){
         return res.status(403).json({message: "Admin is Not authorized"});
     }
+    next();
 }
-export const doctorToken = async(req,res)=>{
-    const token = req.cookie.doctorToken;
+export const doctorAuthToken = async(req,res,next)=>{
+    const token = req.cookies.doctorToken;
 
     if(!token){
         return res.status(400).json({message: "Doctor is not authenticated!"});
@@ -28,11 +29,14 @@ export const doctorToken = async(req,res)=>{
     if(req.user.roles !== "Doctor"){
         return res.status(403).json({message: "Doctor is Not authorized"});
     }
+    next();
 }
-export const adminToken = async(req,res)=>{
-    const token = req.cookie.adminToken;
+export const adminTokenAuth = async(req,res,next)=>{
+    const token = req.cookies.adminToken;
+    // console.log("Admin token received:", token); 
 
     if(!token){
+        console.log("No token found, admin is not authenticated.");
         return res.status(400).json({message: "Admin is not authenticated!"});
     }
 
@@ -42,4 +46,5 @@ export const adminToken = async(req,res)=>{
     if(req.user.roles !== "Admin"){
         return res.status(403).json({message: "Admin is Not authorized"});
     }
+    next();
 }

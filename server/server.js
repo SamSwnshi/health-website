@@ -6,9 +6,19 @@ import cookieParser from "cookie-parser";
 import connectionDb from "./db/config.js";
 import fileUpload from "express-fileupload";
 import userRoutes from "./routes/user.routes.js";
-import {errorMiddleware} from "./middleware/errorMiddleware.js"
+import messageRoutes from "./routes/message.routes.js";
+import appointmentRoutes from "./routes/appointment.routes.js";
+import {errorMiddleware} from "./middleware/errorMiddleware.js";
+import cloudinary from "cloudinary";
 const app = express();
 dotenv.config();
+
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
+
 
 const port = process.env.PORT || 8000;
 
@@ -29,6 +39,9 @@ app.use(fileUpload({
 
 
 app.use("/api/v1/user",userRoutes)
+app.use("/api/v1/message",messageRoutes)
+app.use("/api/v1/appointments", appointmentRoutes);
+
 app.listen(port, () => {
   connectionDb();
   console.log(`Server is running on port: ${port}`);
