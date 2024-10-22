@@ -1,14 +1,37 @@
-
-import './App.css'
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import About from "./pages/About";
+import Appointment from "./pages/Appointment";
+import Services from "./pages/Services";
+import Contact from "./pages/Contact";
+import PrivacyAndPolicy from "./pages/PrivacyAndPolicy";
+import PageNotFound from "./pages/PageNotFound";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
 
 function App() {
- 
-
   return (
     <>
-    <h1 className='text-2xl text-red-700'>Hospital Mangement</h1>
+      <div className="tracking-widest">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/appointment" element={<Appointment />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacyandpolicy" element={<PrivacyAndPolicy />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+        <Footer />
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
