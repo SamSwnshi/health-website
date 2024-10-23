@@ -11,8 +11,31 @@ import PrivacyAndPolicy from "./pages/PrivacyAndPolicy";
 import PageNotFound from "./pages/PageNotFound";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import { ToastContainer } from "react-toastify";
+import { useContext, useEffect } from "react";
+import { Context } from "./main";
+import axios from "axios";
 
 function App() {
+  const { setIsAuth, setUser } = useContext(Context);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/api/v1/user/single-patient",
+          { withCredentials: true }
+        );
+        setIsAuth(true);
+        setUser(response.data.user);
+      } catch (error) {
+        console.log('Error:', error.response.data);
+        setIsAuth(false);
+        setUser({});
+      }
+    };
+    fetchUser();
+  }, []);
   return (
     <>
       <div className="tracking-widest">
@@ -29,6 +52,7 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Footer />
+        <ToastContainer position="top-center" />
       </div>
     </>
   );

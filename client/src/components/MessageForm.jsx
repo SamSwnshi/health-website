@@ -1,19 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const MessageForm = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await axios
+      .post(
+        "http://localhost:8000/api/v1/message/create-message",
+        {
+          firstName,
+          lastName,
+          email,
+          phone,
+          message,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        toast.success(res?.data?.message);
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPhone("");
+        setMessage("");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response?.data?.message);
+      });
+  };
   return (
     <div className="max-w-[1540px] mx-auto py-12 mb-2 px-4 ">
-      <h2 className="text-2xl font-bold mb-6 text-center text-yellow-700">Send Message To Us</h2>
-      <form action="" className="space-y-6">
+      <h2 className="text-2xl font-bold mb-6 text-center text-yellow-700">
+        Send Message To Us
+      </h2>
+      <form action="" className="space-y-6" onClick={handleSubmit}>
         <div className="flex flex-col md:flex-row gap-4 mb-4">
           <input
             type="text"
             placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
             className="w-full md:w-1/2 p-3 text-xl border-gray-300 bg-slate-300 rounded-md outlien-none shadow-md"
           />
           <input
             type="text"
             placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             className="w-full md:w-1/2 p-3 text-xl border-gray-300 bg-slate-300 rounded-md outlien-none shadow-md"
           />
         </div>
@@ -21,19 +62,23 @@ const MessageForm = () => {
           <input
             type="email"
             placeholder="Enter Your Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="w-full md:w-1/2 p-3 text-xl border-gray-300 bg-slate-300 rounded-md outlien-none shadow-md"
           />
           <input
             type="phone"
             placeholder="Enter Your PhoneNo"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             className="w-full md:w-1/2 p-3 text-xl border-gray-300 bg-slate-300 rounded-md outlien-none shadow-md"
           />
-          
         </div>
         <textarea
           placeholder="Message Lenght More than 10 Digits"
           rows="7"
-        
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
           className="w-full p-3 text-md border border-gray-300  bg-slate-300 rounded-md outline-none shadow-md"
         />
         <div className="flex justify-center mb-4">
