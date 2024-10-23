@@ -26,9 +26,9 @@ const messageModels =new mongoose.Schema({
     message: {
         type: String,
         required: true,
-        minLength: [10,"Message Must Contain At least 50 Characters!"]
+        minLength: [10,"Message Must Contain At least 10 Characters!"]
     }
-},{timestamp: true});
+},{timestamps: true});
 
 const Message = mongoose.model("Message",messageModels);
 

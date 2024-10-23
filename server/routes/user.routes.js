@@ -35,7 +35,7 @@ router.post("/create-new-admin", adminTokenAuth, createAdminController);
 router.post("/create-new-doctor", adminTokenAuth, createNewDoctorController);
 
 //NOTE - getting all the doctor
-router.get("/get-all-doctor", adminTokenAuth, getAllDoctorController);
+router.get("/get-all-doctor", getAllDoctorController);
 
 //NOTE - Get all the patient
 router.get("/get-all-patient", adminTokenAuth, getAllPatientController);

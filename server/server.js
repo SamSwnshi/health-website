@@ -23,10 +23,12 @@ cloudinary.v2.config({
 const port = process.env.PORT || 8000;
 
 app.use(cors({
-  origin: [process.env.FRONTEND_URL,process.env.DASHBOARD_URL],
-  methods:["GET","POST","PUT","DELETE"],
-  credentials:true,
-}))
+  origin: process.env.FRONTEND_URL, //'http://localhost:5173'
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true, 
+}));
+
+
 
 app.use(express.json());
 app.use(morgan('dev'));
