@@ -72,7 +72,7 @@ export const creatingAppointment = async (req, res) => {
   });
 
   // response here
-  res.status(201).send({
+  return res.status(201).send({
     success: true,
     message: "Appointment Send Successfully",
     appiontment,
@@ -83,11 +83,11 @@ export const creatingAppointment = async (req, res) => {
 export const gettingAllAppointment = async (req, res) => {
   const appointments = await Appointment.find();
   if (appointments.length === 0) {
-    res.status(400).json({
+    return res.status(400).json({
       message: "Appointment Not Found",
     });
   }
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     message: "Getting All the Appointment",
   });
@@ -98,12 +98,12 @@ export const deletingAppointment = async (req, res) => {
   const { id } = req.params;
   const appointments = await Appointment.findById(id);
   if (!appointments) {
-    res.status(400).json({
+    return res.status(400).json({
       message: "Appointment Not Found",
     });
   }
   const deletingAppoin = appointments.deleteOne();
-  res.status(200).json({
+  return res.status(200).json({
     status: true,
     message: "Appointment Deleted Successfully",
     deletingAppoin,
@@ -114,14 +114,14 @@ export const updatingAppointment = async (req, res) => {
   const { id } = req.params;
   let appointment = await Appointment.findById(id);
   if (!appointment) {
-    res.status(400).json({ message: "Appointment not found" });
+    return res.status(400).json({ message: "Appointment not found" });
   }
   appointment = await Appointment.findByIdAndUpdate(id, req.body, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
   });
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     message: "Appointment Status Updated",
   });

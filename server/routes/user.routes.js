@@ -7,11 +7,9 @@ import {
   getAllDoctorController,
   getAllPatientController,
   getSinglePatientControllers,
-  logOutAdmin,
-  logOutPatient,
-  logOutDoctor,
   deleteDoctorController,
   deletePatientController,
+  logOut,
 } from "../controllers/user.controllers.js";
 import {
   adminTokenAuth,
@@ -50,13 +48,13 @@ router.get("/single-doctor", doctorAuthToken, getSinglePatientControllers);
 router.get("/single-admin", adminTokenAuth, getSinglePatientControllers);
 
 //NOTE - logout admin
-router.get("/logout-admin", adminTokenAuth, logOutAdmin);
+router.get("/logout", adminTokenAuth, logOut);
 
 //NOTE - logout patient
-router.get("/logout-patient", patientAuthToken, logOutPatient);
+router.get("/logout", patientAuthToken, logOut);
 
 //NOTE - logout doctor
-router.get("/logout-doctor", doctorAuthToken, logOutDoctor);
+router.get("/logout", doctorAuthToken, logOut);
 
 //NOTE - delete single doctor
 router.delete("/delete/doctor/:id", adminTokenAuth, deleteDoctorController);

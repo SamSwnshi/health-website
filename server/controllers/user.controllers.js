@@ -246,83 +246,72 @@ export const getSinglePatientControllers = async (req, res) => {
   });
 };
 
-//NOTE - logout admin
-export const logOutAdmin = async (req, res) => {
-  console.log("Logout request received from admin:", req.user);
-  res
-    .status(200)
-    .cookie("adminToken", null, {
-      httpOnly: true,
-      expires: new Date(Date.now()),
-    })
-    .send({
-      success: true,
-      message: "Admin Logged Out Successfully",
-    });
-};
-//NOTE - logout doctor
-export const logOutDoctor = async (req, res) => {
-  console.log("Logout request received from admin:", req.user);
-  res
-    .status(200)
-    .cookie("doctorToken", null, {
-      httpOnly: true,
-      expires: new Date(Date.now()),
-    })
-    .send({
-      success: true,
-      message: "Admin Logged Out Successfully",
-    });
-};
-//NOTE - logout patient
-export const logOutPatient = async (req, res) => {
-  console.log("Logout request received from admin:", req.user);
-  res
-    .status(200)
-    .cookie("patientToken", null, {
-      httpOnly: true,
-      expires: new Date(Date.now()),
-    })
-    .send({
-      success: true,
-      message: "Admin Logged Out Successfully",
-    });
-};
 
+//NOTE - logout single function
+export const logOut = async (req, res) => {
+  const role = req.user.roles;
+
+  let tokenName;
+  switch (role) {
+    case "Admin":
+      tokenName = "adminToken";
+      break;
+    case "Doctor":
+      tokenName = "doctorToken";
+      break;
+    case "Patient":
+      tokenName = "patientToken";
+      break;
+    default:
+      return res.status(400).json({ message: "Invalid user role" });
+
+  }
+  console.log(`Logout request received from ${role}:`, req.user);
+
+  res
+  .status(200)
+  .cookie(tokenName, null, {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  })
+  .send({
+    success: true,
+    message: `${role.charAt(0).toUpperCase() + role.slice(1)} Logged Out Successfully`,
+  });
+};
 //NOTE - delete single doctor
-export const deleteDoctorController = async(req,res)=>{
-  const {id} = req.params;
+export const deleteDoctorController = async (req, res) => {
+  const { id } = req.params;
 
-  const doctor = await User.findByIdAndDelete({_id: id,roles: "Doctor"});
+  const doctor = await User.findByIdAndDelete({ _id: id, roles: "Doctor" });
 
-  if(!doctor && doctor.length === 0 ){
-res.status(404).json({
-  message: "Doctor Not Found"
-})
+  if (!doctor && doctor.length === 0) {
+    res.status(404).json({
+      message: "Doctor Not Found",
+    });
   }
   res.status(200).json({
     success: true,
     message: "Doctor Deleted Successfully",
-  })
-}
+  });
+};
 
 //NOTE - delete single patient
-export const deletePatientController = async(req,res)=>{
-  const {id} = req.params;
+export const deletePatientController = async (req, res) => {
+  const { id } = req.params;
 
-  const patient = await User.findByIdAndDelete({_id: id,roles: "Patient"});
+  const patient = await User.findByIdAndDelete({ _id: id, roles: "Patient" });
 
-  if(!patient && patient.length === 0 ){
-res.status(404).json({
-  message: "Patient Not Found"
-})
+  if (!patient && patient.length === 0) {
+    res.status(404).json({
+      message: "Patient Not Found",
+    });
   }
   res.status(200).json({
     success: true,
     message: "patient Deleted Successfully",
-  })
-}
-
+  });
+};
 
 export default {
   createUserController,
@@ -332,9 +321,7 @@ export default {
   getAllDoctorController,
   getAllPatientController,
   getSinglePatientControllers,
-  logOutAdmin,
-  logOutPatient,
-  logOutDoctor,
   deleteDoctorController,
   deletePatientController,
+  logOut
 };
