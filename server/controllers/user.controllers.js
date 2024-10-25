@@ -1,6 +1,24 @@
 import User from "../models/user.models.js";
 import { jsonwebtoken } from "../utlis/token.js";
 import cloudinary from "cloudinary";
+
+//NOTE - currentLogin
+export const currentLogin = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    console.log(req.user);
+    console.log(req.user.roles);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json({ user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 //NOTE - creating patient
 export const createUserController = async (req, res) => {
   const { firstName, lastName, email, nic, dob, password, gender, phone } =
@@ -68,6 +86,7 @@ export const loginController = async (req, res) => {
   if (roles !== user.roles) {
     return res.status(400).send({ message: "Invalid Role" });
   }
+  console.log(roles)
 
   // res.status(200).send({message: "User Login Successfully!",user})
   jsonwebtoken(user, "User Login Successfully", 200, res);
@@ -246,39 +265,52 @@ export const getSinglePatientControllers = async (req, res) => {
   });
 };
 
-
 //NOTE - logout single function
 export const logOut = async (req, res) => {
-  const role = req.user.roles;
+  // const role = req.user.roles;
 
-  let tokenName;
-  switch (role) {
-    case "Admin":
-      tokenName = "adminToken";
-      break;
-    case "Doctor":
-      tokenName = "doctorToken";
-      break;
-    case "Patient":
-      tokenName = "patientToken";
-      break;
-    default:
-      return res.status(400).json({ message: "Invalid user role" });
+  // console.log("User on logout:", req.user);
 
-  }
-  console.log(`Logout request received from ${role}:`, req.user);
+  // let tokenName;
+  // switch (role) {
+  //   case "Admin":
+  //     tokenName = "adminToken";
+  //     break;
+  //   case "Doctor":
+  //     tokenName = "doctorToken";
+  //     break;
+  //   case "Patient":
+  //     tokenName = "patientToken";
+  //     break;
+  //   default:
+  //     return res.status(400).json({ message: "Invalid user role" });
+  // }
+  // console.log(`Logout request received from ${role}:`, req.user);
 
+  // res
+  //   .status(200)
+  //   .cookie(tokenName, null, {
+  //     httpOnly: true,
+  //     expires: new Date(Date.now()),
+  //   })
+  //   .send({
+  //     success: true,
+  //     message: `${
+  //       role.charAt(0).toUpperCase() + role.slice(1)
+  //     } Logged Out Successfully`,
+  //   });
   res
   .status(200)
-  .cookie(tokenName, null, {
-    httpOnly: true,
-    expires: new Date(Date.now()),
-  })
+  .clearCookie("adminToken", { httpOnly: true })
+  .clearCookie("doctorToken", { httpOnly: true })
+  .clearCookie("patientToken", { httpOnly: true })
   .send({
     success: true,
-    message: `${role.charAt(0).toUpperCase() + role.slice(1)} Logged Out Successfully`,
+    message: "Logged Out Successfully",
   });
 };
+
+
 //NOTE - delete single doctor
 export const deleteDoctorController = async (req, res) => {
   const { id } = req.params;
@@ -323,5 +355,5 @@ export default {
   getSinglePatientControllers,
   deleteDoctorController,
   deletePatientController,
-  logOut
+  logOut,
 };

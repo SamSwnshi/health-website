@@ -38,10 +38,10 @@ export const creatingAppointment = async (req, res) => {
   }
 
   const foundDoctors = await User.find({
-    firstName: { $regex: new RegExp(doctor_firstName, i) },
-    lastName: { $regex: new RegExp(doctor_lastName, i) },
+    firstName: { $regex: new RegExp(doctor_firstName, "i") },
+    lastName: { $regex: new RegExp(doctor_lastName, "i") },
     roles: "Doctor",
-    doctorDepartment: { $regex: new RegExp(department, i) },
+    doctorDepartment: { $regex: new RegExp(department, "i") },
   });
   if (foundDoctors.length === 0) {
     return res.status(400).json({ message: "Doctor Not Found" });
@@ -75,7 +75,7 @@ export const creatingAppointment = async (req, res) => {
   return res.status(201).send({
     success: true,
     message: "Appointment Send Successfully",
-    appiontment,
+    appiontment: appiontment,
   });
 };
 
@@ -90,6 +90,7 @@ export const gettingAllAppointment = async (req, res) => {
   return res.status(200).json({
     success: true,
     message: "Getting All the Appointment",
+    appointments
   });
 };
 

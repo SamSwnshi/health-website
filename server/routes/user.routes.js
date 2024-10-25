@@ -10,6 +10,7 @@ import {
   deleteDoctorController,
   deletePatientController,
   logOut,
+  currentLogin,
 } from "../controllers/user.controllers.js";
 import {
   adminTokenAuth,
@@ -17,6 +18,9 @@ import {
   doctorAuthToken,
 } from "../middleware/auth.js";
 const router = express.Router();
+
+//NOTE - me data
+router.get("/me", adminTokenAuth, currentLogin);
 
 //NOTE - create a User
 router.post("/create-patient", createUserController);
@@ -47,14 +51,15 @@ router.get("/single-doctor", doctorAuthToken, getSinglePatientControllers);
 //NOTE - get single admin
 router.get("/single-admin", adminTokenAuth, getSinglePatientControllers);
 
-//NOTE - logout admin
-router.get("/logout", adminTokenAuth, logOut);
-
-//NOTE - logout patient
-router.get("/logout", patientAuthToken, logOut);
-
 //NOTE - logout doctor
-router.get("/logout", doctorAuthToken, logOut);
+router.post("/logout", logOut);
+
+
+// //NOTE - logout patient
+// router.post("/logout",  logOut);
+
+// //NOTE - logout admin
+// router.post("/logout",  logOut);
 
 //NOTE - delete single doctor
 router.delete("/delete/doctor/:id", adminTokenAuth, deleteDoctorController);

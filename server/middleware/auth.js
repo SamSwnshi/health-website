@@ -11,9 +11,9 @@ export const patientAuthToken = async(req,res,next)=>{
     const decode = jwt.verify(token,process.env.JWT_SECRET_KEY);
     req.user = await User.findById(decode.id);
 
-    if(req.user.roles !== "Patient"){
-        return res.status(403).json({message: "Admin is Not authorized"});
-    }
+    // if(req.user.roles !== "Patient"){
+    //     return res.status(403).json({message: "Patient is Not authorized"});
+    // }
     next();
 }
 export const doctorAuthToken = async(req,res,next)=>{
@@ -26,9 +26,9 @@ export const doctorAuthToken = async(req,res,next)=>{
     const decode = jwt.verify(token,process.env.JWT_SECRET_KEY);
     req.user = await User.findById(decode.id);
 
-    if(req.user.roles !== "Doctor"){
-        return res.status(403).json({message: "Doctor is Not authorized"});
-    }
+    // if(req.user.roles !== "Doctor"){
+    //     return res.status(403).json({message: "Doctor is Not authorized"});
+    // }
     next();
 }
 export const adminTokenAuth = async(req,res,next)=>{
@@ -43,8 +43,8 @@ export const adminTokenAuth = async(req,res,next)=>{
     const decode = jwt.verify(token,process.env.JWT_SECRET_KEY);
     req.user = await User.findById(decode.id);
 
-    if(req.user.roles !== "Admin"){
-        return res.status(403).json({message: "Admin is Not authorized"});
-    }
+    // if(req.user.roles !== "Admin"){
+    //     return res.status(403).json({message: "Admin is Not authorized"});
+    // }
     next();
 }
