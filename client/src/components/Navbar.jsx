@@ -5,17 +5,18 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
-  const { isAuth, setIsAuth } = useContext(Context);
+  const { isAuth, setIsAuth,setUser  } = useContext(Context);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:8000/api/v1/user/logout-patient",
+      const res = await axios.post(
+        "http://localhost:8000/api/v1/user/logout",{},
         { withCredentials: true }
       );
       toast.success(res.data.message);
       setIsAuth(false);
+      setUser({});
       navigate("/login");
     } catch (error) {
       toast.error(
@@ -23,6 +24,8 @@ const Navbar = () => {
       );
     }
   };
+
+
   const handleLogin = () => {
     navigate("/login");
   };

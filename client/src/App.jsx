@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -11,25 +11,28 @@ import PrivacyAndPolicy from "./pages/PrivacyAndPolicy";
 import PageNotFound from "./pages/PageNotFound";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import { ToastContainer } from "react-toastify";
 import { useContext, useEffect } from "react";
 import { Context } from "./main";
 import axios from "axios";
+import AdminDashboard from "./components/AdminDashboard";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 function App() {
-  const { setIsAuth, setUser } = useContext(Context);
+  const { isAuth, setIsAuth, user, setUser } = useContext(Context);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/v1/user/single-patient",
+          "http://localhost:8000/api/v1/user/login",
           { withCredentials: true }
         );
         setIsAuth(true);
         setUser(response.data.user);
       } catch (error) {
-        console.log('Error:', error.response.data);
+        console.log("Error:", error.response);
         setIsAuth(false);
         setUser({});
       }
@@ -48,7 +51,19 @@ function App() {
           <Route path="/appointment" element={<Appointment />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
+          
           <Route path="/privacyandpolicy" element={<PrivacyAndPolicy />} />
+          <Route
+            path="/admindashboard/*"
+            element={
+              isAuth && user.roles === "Admin" ? (
+                <AdminDashboard />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+         
           <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Footer />

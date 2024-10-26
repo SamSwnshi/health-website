@@ -25,7 +25,10 @@ const Register = () => {
         headers: { "Content-Type": "application/json" }
       });
 
-      toast.success(res.data.message);
+      toast.success(res.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+      });
       navigate("/login");
       setDob("");
       setEmail("");

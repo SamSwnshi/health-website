@@ -11,8 +11,14 @@ const MessageForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios
-      .post(
+  
+    if (!firstName || !lastName || !email || !phone || !message) {
+      toast.error("All fields are required.");
+      return;
+    }
+  
+    try {
+      const res = await axios.post(
         "http://localhost:8000/api/v1/message/create-message",
         {
           firstName,
@@ -22,19 +28,21 @@ const MessageForm = () => {
           message,
         },
         { withCredentials: true }
-      )
-      .then((res) => {
-        toast.success(res?.data?.message);
-        setFirstName("");
-        setLastName("");
-        setEmail("");
-        setPhone("");
-        setMessage("");
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error(error.response?.data?.message);
+      );
+      toast.success(res.data.message, {
+        position: "top-center",
+        autoClose: 5000,
       });
+      // Reset the form fields
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPhone("");
+      setMessage("");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "Failed to send message.");
+    }
   };
   return (
     <div className="max-w-[1540px] mx-auto py-12 mb-2 px-4 ">

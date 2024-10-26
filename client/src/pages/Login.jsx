@@ -1,13 +1,15 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { Context } from "../main";
 import { toast } from "react-toastify";
 
 const Login = () => {
+  const { setIsAuth, setUser } = useContext(Context);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [roles, setRoles] = useState("Patient");
+  const [roles, setRoles] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -21,16 +23,29 @@ const Login = () => {
           headers: { "Content-Type": "application/json" },
         }
       );
+      console.log(res.data.user.roles);
 
-      toast.success(res.data.message);
-      navigate("/");
+      // Check the role from the response and navigate accordingly
+      if (res.data.user.roles === "Admin") {
+        navigate("/admindashboard");
+      } else {
+        navigate("/"); // Redirect to home for Doctor or Patient
+      }
+      toast.success(res.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+      });
+      setUser(res.data.user);
+      setIsAuth(true);
+
       setEmail("");
       setPassword("");
-      setRoles("Patient");
+      setRoles("");
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
     }
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center">
       <section className="flex justify-center items-center py-24 rounded-md">
@@ -46,28 +61,29 @@ const Login = () => {
                   placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full  p-3 border  rounded-md outline-none shadow-md"
+                  className="w-full p-3 border rounded-md outline-none shadow-md"
                 />
                 <input
                   type="password"
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full  p-3 border  rounded-md outline-none shadow-md"
+                  className="w-full p-3 border rounded-md outline-none shadow-md"
                 />
                 <select
-                  className="w-full bg-gray-300 p-3 border  rounded-md outline-none shadow-md"
+                  className="w-full bg-gray-300 p-3 border rounded-md outline-none shadow-md"
                   value={roles}
                   onChange={(e) => setRoles(e.target.value)}
                 >
                   <option value="">Select Role</option>
                   <option value="Patient">Patient</option>
                   <option value="Doctor">Doctor</option>
+                  <option value="Admin">Admin</option>
                 </select>
               </div>
 
               <div className="flex justify-center">
-                <p>Don't have a Account?</p>{" "}
+                <p>Don't have an account?</p>
                 <Link
                   to={"/register"}
                   className="text-blue-600 hover:underline"
@@ -76,14 +92,11 @@ const Login = () => {
                 </Link>
               </div>
               <div className="flex justify-center items-center">
-                <button
-                  className="px-5 w-full py-1 rounded-lg cursor-pointer
-               bg-yellow-200 text-lg text-black text-center border-2
-                border-transparent hover:border-3"
-                >
+                <button className="px-5 w-full py-1 rounded-lg cursor-pointer bg-yellow-200 text-lg text-black text-center border-2 border-transparent hover:border-3">
                   Login
                 </button>
               </div>
+            
             </form>
           </div>
         </div>

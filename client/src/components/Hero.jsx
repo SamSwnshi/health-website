@@ -1,6 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+  const handleAppointment = () =>{
+    navigate("/appointment")
+  }
   return (
     <div className="max-w-[1540px] min-h-screen mx-auto pt-10 flex flex-col items-center overflow-hidden">
       <div className="w-full h-[600px] py-4">
@@ -27,7 +32,7 @@ const Hero = () => {
             <div className="text-center">
               <button
                 className="mt-4 border-white bg-white text-black px-4 py-2
-                  rounded-md hover:border-2 hover:border-pink-500"
+                  rounded-md hover:border-2 hover:border-pink-500" onClick={handleAppointment}
               >
                 Book Your Doctor Appointment
               </button>

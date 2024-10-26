@@ -70,7 +70,10 @@ const AppointmentForm = () => {
           headers: { "Content-Type": "application/json" },
         }
       );
-      toast.success(data.message);
+      toast.success(data.message, {
+        position: "top-center",
+        autoClose: 5000,
+      });
       setFirstName("");
       setLastName("");
       setEmail("");
@@ -89,7 +92,7 @@ const AppointmentForm = () => {
     }
   };
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center mt-6">
+    <div className="min-h-screen flex flex-col items-center justify-center mt-20">
       <div className="w-1/2 h-full border-2 border-red-900 p-6 shadow-xl text-center rounded-lg ">
         <h1 className="text-2xl font-semibold  mb-4">Appointment</h1>
         <form action="" onSubmit={handleAppointment}>

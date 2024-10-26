@@ -4,7 +4,7 @@ import Doctor from "../components/Doctor";
 import Biography from "../components/Biography";
 import Department from "../components/Department";
 import MessageForm from "../components/MessageForm";
-import Subscipt from "../components/Subscipt";
+// import Subscipt from "../components/Subscipt";
 import Location from "../components/Location";
 
 const Home = () => {
@@ -15,7 +15,7 @@ const Home = () => {
       <Biography />
       <Department />
       <MessageForm />
-      <Subscipt />
+      {/* <Subscipt /> */}
       <Location />
     </div>
   );

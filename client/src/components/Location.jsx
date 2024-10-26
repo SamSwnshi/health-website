@@ -7,7 +7,7 @@ const Location = () => {
       <div className="max-w-[1540px] mx-auto h-[500px] flex justify-center items-center py-8 mt-4">
         <iframe
           className="w-full"
-          height={"450px"}
+          height={"500px"}
           src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Ekta%20nagar%20Gudhiyar%20raipur%20c.g+(India)&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
           title="Google Map"
         >
