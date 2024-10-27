@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
   const navigate = useNavigate();
-  const handleAppointment = () =>{
-    navigate("/appointment")
-  }
+  const handleAppointment = () => {
+    navigate("/appointment");
+  };
+
   return (
     <div className="max-w-[1540px] min-h-screen mx-auto pt-10 flex flex-col items-center overflow-hidden">
       <div className="w-full h-[600px] py-4">
@@ -13,12 +14,12 @@ const Hero = () => {
           <div
             className="absolute w-full h-full bg-red-300/80 
               text-black flex flex-col justify-center items-center opacity-0 
-              group-hover:opacity-100 transition-opacity duration-500 ease-in-out"
+              group-hover:opacity-100 transition-opacity duration-500 ease-in-out p-4 "
           >
-            <p className="font-bold text-4xl px-4 text-center">
+            <p className="font-bold text-2xl sm:text-xl md:text-2xl lg:text-4xl mb-2 text-center border-2 w-full">
               Hospital Management System
             </p>
-            <p className="px-4 text-center py-4 text-xl">
+            <p className="px-4 text-center py-4 flex sm:text-lg md:text-lg lg:text-lg max-w-xl border-2 w-full">
               Our hospital management system provides state-of-the-art 
               solutions to ensure seamless operations. We are committed to 
               delivering top-notch medical services with comprehensive 
@@ -32,7 +33,8 @@ const Hero = () => {
             <div className="text-center">
               <button
                 className="mt-4 border-white bg-white text-black px-4 py-2
-                  rounded-md hover:border-2 hover:border-pink-500" onClick={handleAppointment}
+                  rounded-md hover:border-2 hover:border-pink-500 transition duration-300"
+                onClick={handleAppointment}
               >
                 Book Your Doctor Appointment
               </button>

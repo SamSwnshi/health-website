@@ -17,6 +17,20 @@ const Doctor = () => {
     autoplay: true,
     autoplaySpeed: 3000,
     arrows: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
   useEffect(() => {
@@ -26,11 +40,10 @@ const Doctor = () => {
           "http://localhost:8000/api/v1/user/get-all-doctor",
           { withCredentials: true }
         );
-        console.log(data.doctor);
         toast.success("Doctors fetched successfully!", {
           position: "top-center",
           autoClose: 3000,
-        }); 
+        });
         setDoctors(data.doctor);
       } catch (error) {
         toast.error(
@@ -42,24 +55,28 @@ const Doctor = () => {
   }, []);
 
   return (
-    <div className="max-w-[1540px] mx-auto py-12 overflow-hidden ">
-      <h1 className="text-center text-4xl font-bold mb-8">Our Doctors</h1>
-      <Slider {...settings} className="w-[1540px] h-[600px] mt-[20px] gap-5">
+    <div className="max-w-[1200px] mx-auto py-12 px-4 md:px-8 overflow-hidden">
+      <h1 className="text-center text-3xl md:text-4xl font-bold mb-8">
+        Our Doctors
+      </h1>
+      <Slider {...settings} className="w-full mt-[20px] gap-5">
         {doctors.map((doctor) => (
           <div
             key={doctor._id}
-            className="flex flex-col justify-center gap-5 items-center w-full h-[600px] rounded-lg "
+            className="flex flex-col justify-center gap-3 items-center w-full h-auto rounded-lg"
           >
             <img
               src={doctor.docImage?.url}
               alt={`Doctor ${doctor.firstName}`}
-              className="object-cover w-full h-full px-4 rounded-xl cursor-pointer mb-3"
+              className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-contain px-4 rounded-xl cursor-pointer mb-3"
             />
-            <div className="flex items-center justify-evenly text-center mt-4 mb-2">
-              <p className="font-bold text-xl">
+            <div className="text-center mt-4 mb-2">
+              <p className="font-bold text-lg md:text-xl">
                 {doctor.firstName} {doctor.lastName}
               </p>
-              <p className="font-bold text-lg">{doctor.doctorDepartment}</p>
+              <p className="text-md md:text-lg font-medium text-gray-700">
+                {doctor.doctorDepartment}
+              </p>
             </div>
           </div>
         ))}

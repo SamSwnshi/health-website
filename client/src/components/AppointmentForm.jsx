@@ -18,7 +18,7 @@ const AppointmentForm = () => {
   const [hasVisited, setHasVisited] = useState(false);
 
   const departmentsName = [
-    "Pediatrice",
+    "Pediatrics",
     "ENT",
     "Orthopedic",
     "Neurology",
@@ -91,12 +91,13 @@ const AppointmentForm = () => {
       toast.error(error.response.data.message);
     }
   };
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center mt-20">
-      <div className="w-1/2 h-full border-2 border-red-900 p-6 shadow-xl text-center rounded-lg ">
-        <h1 className="text-2xl font-semibold  mb-4">Appointment</h1>
-        <form action="" onSubmit={handleAppointment}>
-          <div className="flex justify-between gap-6  mb-4">
+    <div className="min-h-screen flex flex-col items-center justify-center mt-20 p-4">
+      <div className="w-full sm:w-3/4 md:w-1/2 lg:w-1/3 h-full border-2 border-red-900 p-6 shadow-xl text-center rounded-lg">
+        <h1 className="text-2xl font-semibold mb-4">Appointment</h1>
+        <form onSubmit={handleAppointment}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <input
               type="text"
               placeholder="First Name"
@@ -112,7 +113,7 @@ const AppointmentForm = () => {
               className="w-full border border-gray-300 p-3 rounded-md outline-none shadow-md"
             />
           </div>
-          <div className="flex justify-between gap-6  mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <input
               type="email"
               placeholder="Enter Email"
@@ -121,16 +122,16 @@ const AppointmentForm = () => {
               className="w-full border border-gray-300 p-3 rounded-md outline-none shadow-md"
             />
             <input
-              type="phone"
+              type="tel"
               placeholder="Enter Phone Number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="w-full border border-gray-300 p-3 rounded-md outline-none shadow-md"
             />
           </div>
-          <div className="flex justify-between gap-6  mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <input
-              type="number"
+              type="text"
               placeholder="NIC"
               value={nic}
               onChange={(e) => setNic(e.target.value)}
@@ -138,13 +139,13 @@ const AppointmentForm = () => {
             />
             <input
               type="date"
-              placeholder="Enter Date of Birth"
+              placeholder="Date of Birth"
               value={dob}
               onChange={(e) => setDob(e.target.value)}
               className="w-full border border-gray-300 p-3 rounded-md outline-none shadow-md"
             />
           </div>
-          <div className="flex justify-between gap-6  mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <select
               value={gender}
               onChange={(e) => setGender(e.target.value)}
@@ -162,7 +163,7 @@ const AppointmentForm = () => {
               className="w-full border border-gray-300 p-3 rounded-md outline-none shadow-md"
             />
           </div>
-          <div className="flex justify-between gap-6  mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <select
               value={department}
               onChange={(e) => {
@@ -172,12 +173,10 @@ const AppointmentForm = () => {
               }}
               className="w-full border border-gray-300 p-3 rounded-md outline-none shadow-md"
             >
-              {departmentsName.map((items, index) => (
-                <>
-                  <option key={index} value={items}>
-                    {items}
-                  </option>
-                </>
+              {departmentsName.map((item, index) => (
+                <option key={index} value={item}>
+                  {item}
+                </option>
               ))}
             </select>
             <select
@@ -191,18 +190,22 @@ const AppointmentForm = () => {
               className="w-full border border-gray-300 p-3 rounded-md outline-none shadow-md"
             >
               <option value="">Select Doctor</option>
+              {doctors.map((doctor, index) => (
+                <option key={index} value={`${doctor.firstName} ${doctor.lastName}`}>
+                  {doctor.firstName} {doctor.lastName}
+                </option>
+              ))}
             </select>
           </div>
           <textarea
             rows="4"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            className="w-full p-3 border border-gray-300 bg-slate-300 rounded-md outline-none shadow-md mb-4 mt-2"
+            className="w-full p-3 border border-gray-300 bg-slate-300 rounded-md outline-none shadow-md mb-4"
+            placeholder="Enter your address"
           />
           <div className="flex items-center text-center justify-center gap-4 mb-4">
-            <p className="mb-0 text-center cursor-pointer justify-center">
-              Have you Visited Before?
-            </p>
+            <p className="mb-0">Have you Visited Before?</p>
             <input
               type="checkbox"
               className="w-6 h-6 rounded-full border-2"
@@ -212,8 +215,7 @@ const AppointmentForm = () => {
           </div>
           <button
             type="submit"
-            className="mx-auto bg-blue-400 text-black w-full 
-          cursor-pointer hover:text-white py-3 px-6 rounded-md hover:bg-blue-700"
+            className="mx-auto bg-blue-400 text-black w-full cursor-pointer hover:text-white py-3 px-6 rounded-md hover:bg-blue-700"
           >
             Get Appointment
           </button>

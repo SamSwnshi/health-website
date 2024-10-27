@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../main";
 import { toast } from "react-toastify";
@@ -23,14 +23,13 @@ const Login = () => {
           headers: { "Content-Type": "application/json" },
         }
       );
-      console.log(res.data.user.roles);
 
-      // Check the role from the response and navigate accordingly
       if (res.data.user.roles === "Admin") {
         navigate("/admindashboard");
       } else {
         navigate("/"); // Redirect to home for Doctor or Patient
       }
+
       toast.success(res.data.message, {
         position: "top-center",
         autoClose: 5000,
@@ -47,58 +46,54 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <section className="flex justify-center items-center py-24 rounded-md">
-        <div className="px-4 bg-white p-2 py-6 w-full lg:max-w-[650px] md:max-w-[500px] max-w-[500px] mx-auto flex flex-col rounded-lg shadow-lg">
-          <div className="flex flex-col justify-center items-center">
-            <h2 className="text-center py-8 text-xl md:text-2xl font-bold text-red-700">
-              Login Page
-            </h2>
-            <form className="flex flex-col gap-6 w-full" onSubmit={handleLogin}>
-              <div className="flex flex-col gap-6">
-                <input
-                  type="text"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full p-3 border rounded-md outline-none shadow-md"
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full p-3 border rounded-md outline-none shadow-md"
-                />
-                <select
-                  className="w-full bg-gray-300 p-3 border rounded-md outline-none shadow-md"
-                  value={roles}
-                  onChange={(e) => setRoles(e.target.value)}
-                >
-                  <option value="">Select Role</option>
-                  <option value="Patient">Patient</option>
-                  <option value="Doctor">Doctor</option>
-                  <option value="Admin">Admin</option>
-                </select>
-              </div>
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <section className="flex justify-center items-center py-12 md:py-24 w-full">
+        <div className="bg-white w-full max-w-xs md:max-w-md lg:max-w-lg p-6 rounded-lg shadow-lg">
+          <h2 className="text-center text-2xl md:text-3xl font-bold text-red-700 mb-8">
+            Login Page
+          </h2>
+          <form className="flex flex-col gap-4" onSubmit={handleLogin}>
+            <input
+              type="text"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-3 border rounded-md outline-none shadow-md"
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-3 border rounded-md outline-none shadow-md"
+            />
+            <select
+              className="w-full p-3 border bg-gray-300 rounded-md outline-none shadow-md"
+              value={roles}
+              onChange={(e) => setRoles(e.target.value)}
+            >
+              <option value="">Select Role</option>
+              <option value="Patient">Patient</option>
+              <option value="Doctor">Doctor</option>
+              <option value="Admin">Admin</option>
+            </select>
 
-              <div className="flex justify-center">
-                <p>Don't have an account?</p>
-                <Link
-                  to={"/register"}
-                  className="text-blue-600 hover:underline"
-                >
+            <div className="text-center text-sm">
+              <p>
+                Don't have an account?{" "}
+                <Link to="/register" className="text-blue-600 hover:underline">
                   Register Now
                 </Link>
-              </div>
-              <div className="flex justify-center items-center">
-                <button className="px-5 w-full py-1 rounded-lg cursor-pointer bg-yellow-200 text-lg text-black text-center border-2 border-transparent hover:border-3">
-                  Login
-                </button>
-              </div>
-            
-            </form>
-          </div>
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-3 mt-4 rounded-lg bg-yellow-200 text-lg font-medium text-black border-2 border-transparent hover:border-blue-600"
+            >
+              Login
+            </button>
+          </form>
         </div>
       </section>
     </div>
