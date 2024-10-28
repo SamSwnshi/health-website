@@ -21,6 +21,7 @@ cloudinary.v2.config({
 
 
 const port = process.env.PORT || 8000;
+//deploying is not completed
 
 app.use(cors({
   origin: process.env.FRONTEND_URL, //'http://localhost:5173'
