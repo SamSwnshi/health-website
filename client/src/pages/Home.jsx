@@ -9,7 +9,7 @@ import Location from "../components/Location";
 
 const Home = () => {
   return (
-    <div>
+    <div className="mt-5">
       <Hero />
       <Doctor />
       <Biography />

@@ -5,20 +5,20 @@ import { FaFacebookSquare, FaYoutube, FaGithub } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <div className="shadow-xl bg-red-900 text-white">
-      <footer className="max-w-full mx-auto py-4 px-4 sm:px-8">
-        <div className="flex flex-col sm:flex-row justify-between gap-8">
-          <div className="flex-1 mb-6  text-center">
+    <div className="shadow-xl bg-[#1A3636] text-white">
+      <footer>
+        <div>
+          <div>
             <h1 className="text-lg  sm:text-xl font-bold cursor-pointer mb-4">
-              Hospital Management System
+              Hospital Management
             </h1>
-            <p className="text-gray-300 text-sm sm:text-base">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia
-              magnam tenetur dolor, ut distinctio ratione impedit. Asperiores,
-              quia et!
+            <p>
+              Our hospital management system streamlines medical processes,
+              enhances patient care, and supports healthcare professionals in
+              delivering efficient, high-quality service.
             </p>
           </div>
-          <div className="flex-1 mb-6  flex flex-col items-center ">
+          <div>
             <div>
               <h4 className="text-lg sm:text-xl font-bold cursor-pointer mb-4">
                 Quick Links
@@ -26,29 +26,41 @@ const Footer = () => {
             </div>
 
             <div className="flex">
-              <ul className="flex space-x-4">
-                {" "}
-                {/* Change space-y-1 to space-x-4 for horizontal spacing */}
-                {[
-                  "Home",
-                  "About",
-                  "Services",
-                  "Contact",
-                  "Privacy And Policy",
-                ].map((link) => (
-                  <li key={link}>
-                    <Link
-                      to={`/${link.toLowerCase().replace(/ /g, "")}`}
-                      className="text-gray-200 hover:text-black  sm:text-base" style={{ fontSize: '15px' }}
-                    >
-                      {link}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <div>
+                <p>Home</p>
+                <Link
+                  to="/"
+                  className="text-gray-200 hover:text-black  sm:text-base"
+                  style={{ fontSize: "15px" }}
+                />
+              </div>
+              <div>
+                <p>About</p>
+                <Link
+                  to="/about"
+                  className="text-gray-200 hover:text-black  sm:text-base"
+                  style={{ fontSize: "15px" }}
+                />
+              </div>
+              <div>
+                <p>Contact</p>
+                <Link
+                  to="/contact"
+                  className="text-gray-200 hover:text-black  sm:text-base"
+                  style={{ fontSize: "15px" }}
+                />
+              </div>
+              <div>
+                <p>Privacy And Policy</p>
+                <Link
+                  to="privacyandpolicy"
+                  className="text-gray-200 hover:text-black  sm:text-base"
+                  style={{ fontSize: "15px" }}
+                />
+              </div>
             </div>
           </div>
-          <div className="flex-1 mb-6  text-center">
+          <div>
             <h4 className="text-lg sm:text-xl font-bold cursor-pointer mb-4">
               Contact
             </h4>
@@ -59,11 +71,8 @@ const Footer = () => {
               <FaGithub className="text-2xl cursor-pointer hover:text-gray-300" />
             </div>
             <div className="flex items-center justify-evenly gap-2 mb-1 text-sm sm:text-base text-center">
-              <p>9848528770</p>
               <p>hotelmanagement@gmail.com</p>
             </div>
-          
-            
           </div>
         </div>
       </footer>

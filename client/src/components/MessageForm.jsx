@@ -90,7 +90,7 @@ const MessageForm = () => {
           className="w-full p-3 text-md border border-gray-300  bg-slate-300 rounded-md outline-none shadow-md"
         />
         <div className="flex justify-center mb-4">
-          <button className="bg-yellow-500 text-black py-2 px-24 rounded hover:bg-blue-600">
+          <button className="bg-yellow-500 text-black py-2 px-24 rounded hover:bg-blue-600 hover:text-white">
             Message Send
           </button>
         </div>

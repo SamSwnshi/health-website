@@ -41,7 +41,7 @@ function App() {
   }, []);
   return (
     <>
-      <div className="tracking-widest">
+      <div className="tracking-widest bg-[#F5EFFF]">
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
